@@ -31,7 +31,7 @@ from langchain.llms import OpenAI
 from langchain.chains import ConversationChain
 from io import StringIO
 from langchain.schema.document import Document
-
+openai_api_key = st.secrets["OPENAI_API_KEY"]
 warnings.filterwarnings('ignore')
 count2 = 0
 st.title("The Big Brain Generator")
