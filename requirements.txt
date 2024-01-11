@@ -82,5 +82,5 @@ watchdog==3.0.0
 wrapt==1.16.0
 yarl==1.9.4
 zipp==3.17.0
-chromadb==0.3.29
+chromadb
 pysqlite-binary
