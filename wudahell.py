@@ -30,10 +30,10 @@ from langchain.memory import ConversationBufferMemory
 from langchain.llms import OpenAI
 from langchain.chains import ConversationChain
 from io import StringIO
+from langchain.schema.document import Document
 
 warnings.filterwarnings('ignore')
 count2 = 0
-
 st.title("The Big Brain Generator")
 st.subheader("created by Team B(ased)")
 st.markdown("### Ever wanted to quickly summarise and practise your notes?")
@@ -48,20 +48,25 @@ if uploaded_file != None:
     if num.isdigit()==True and num != 0:
         num = int(num)
         st.write("Note: If the AI responds with gibberish or cuts off, please restart the AI.")
-        loader = TextLoader(
-            "C:/Users/CET_Training/Downloads/testdocmath.txt",)
-        if loader != None:
-            documents = loader.load() # Loads the documents
+
+        
+        
+        #loader = TextLoader(uploaded_file.read().decode(),)
+        if True:
+            #documents = loader.load() # Loads the documents
+            text_splitter = CharacterTextSplitter(chunk_size=1450, chunk_overlap=0)
+            documents = [Document(page_content=x) for x in text_splitter.split_text(uploaded_file.read().decode())]
+            
             #stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
             #string_data = stringio.read()
-            text_splitter = CharacterTextSplitter(chunk_size=1450, chunk_overlap=0) #Splits into chunks
-            texts = text_splitter.split_documents(documents)
+            #text_splitter = CharacterTextSplitter(chunk_size=1450, chunk_overlap=0) #Splits into chunks
+            #texts = text_splitter.split_documents(documents)
             #Embedding model
             embeddings = OpenAIEmbeddings(
                 openai_api_key=openai_api_key
             )
             chroma_text = Chroma.from_documents(
-                texts, 
+                documents, 
                 embeddings
             )
 
